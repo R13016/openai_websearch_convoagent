@@ -1,0 +1,9 @@
+{
+    "name": "OpenAI Websearch Convoagent",
+    "domain": "openai_websearch_convoagent",
+    "homeassistant": "2021.9.0",
+    "country": "all",
+    "render_readme": true,
+    "zip_release": true
+  }
+  

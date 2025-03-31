@@ -1,0 +1,106 @@
+# OpenAI Websearch Convoagent
+
+The **OpenAI Websearch Convoagent** integration brings conversational AI and image generation directly into Home Assistant with enhanced web search capabilities. Interact with ChatGPT models, generate images via DALL·E 3, and optionally perform web searches to fetch up-to-date information—all within the Home Assistant interface.
+
+---
+
+## ✨ Features
+
+- **Conversational AI**: Engage in dynamic conversations by sending prompts to ChatGPT and receiving streaming text responses.
+- **Image Generation**: Generate images from text prompts using the DALL·E 3 API.
+- **Web Search Integration**: Optionally enable web search to retrieve current and contextually relevant information.
+- **Customizable Options**: Adjust settings like chat model, token limits, temperature, and web search preferences via the Home Assistant UI.
+
+---
+
+## 🚪 Service Endpoints
+
+### `generate_image`
+Generates images based on text prompts using the DALL·E 3 API.
+
+**Service Data:**
+```yaml
+service: openai_websearch_convoagent.generate_image
+data:
+  config_entry: YOUR_CONFIG_ENTRY_ID
+  prompt: "A futuristic cityscape at sunset"
+  size: "1024x1024"            # Optional (default: 1024x1024)
+  quality: "standard"          # Optional (default: standard)
+  style: "vivid"               # Optional (default: vivid)
+```
+
+### `generate_content`
+Sends a conversational prompt to ChatGPT and returns a generated text response.
+
+**Service Data:**
+```yaml
+service: openai_websearch_convoagent.generate_content
+data:
+  config_entry: YOUR_CONFIG_ENTRY_ID
+  prompt: "Tell me a story about space exploration."
+  filenames:
+    - /config/www/example_image.png
+```
+
+---
+
+## 🚚 Installation
+
+### 📂 HACS Installation
+1. Add this repository as a **custom repository** in [HACS](https://hacs.xyz/).
+2. Install the integration via HACS.
+3. Your directory structure should look like:
+
+```
+custom_components/
+└───openai_websearch_convoagent
+    ├── config_flow.py
+    ├── const.py
+    ├── conversation.py
+    ├── icons.json
+    ├── manifest.json
+    ├── services.yaml
+    ├── strings.json
+    └── __init__.py
+```
+4. Restart Home Assistant.
+
+### ✍️ Manual Installation
+1. Clone or copy this repository into your `custom_components/` folder under the directory name `openai_websearch_convoagent`.
+2. Place the `hacs.json` file at the root of the repository.
+3. Restart Home Assistant.
+
+---
+
+## 🔧 Configuration
+
+After installation, add the integration via Home Assistant's UI:
+
+### 🔐 API Key
+When prompted, provide your OpenAI API key. This key is used to authenticate with OpenAI services.
+
+### ⚙️ Options
+You can configure:
+- **Chat Model**: Default is `gpt-4o-mini`
+- **Max Tokens**: Default is `150`
+- **Temperature & Top P**: Tune response randomness and creativity
+- **Reasoning Effort**: For certain models, adjusts the effort level
+- **Web Search Settings**: Enable and customize context, region, and location filtering (works with supported models)
+
+---
+
+## ⚖️ Dependencies
+- **Home Assistant**: Minimum version `2021.9.0`
+- **OpenAI Python Library**: `openai==1.68.2`
+- **Assist & Conversation Components**: Works alongside built-in components for natural language interaction
+
+---
+
+## ⚖️ Usage
+Once set up, use the `generate_image` and `generate_content` services in:
+- Automations
+- Scripts
+- Developer Tools
+
+Enhance your smart home with AI-powered content generation and conversation directly integrated into your workflows.
+
