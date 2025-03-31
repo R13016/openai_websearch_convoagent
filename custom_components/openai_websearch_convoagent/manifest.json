@@ -2,7 +2,7 @@
   "domain": "openai_websearch_convoagent",
   "name": "OpenAI Conversation Agent with Web Search",
   "after_dependencies": ["assist_pipeline", "intent"],
-  "codeowners": ["@balloob"],
+  "codeowners": ["@R13016"],
   "config_flow": true,
   "dependencies": ["conversation"],
   "documentation": "https://www.home-assistant.io/integrations/openai_conversation",
