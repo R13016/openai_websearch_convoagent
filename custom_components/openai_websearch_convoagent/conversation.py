@@ -358,6 +358,14 @@ class OpenAIConversationEntity(
             conversation_id=chat_log.conversation_id,
             continue_conversation=chat_log.continue_conversation,
         )
+    
+    async def async_process(
+        self,
+        user_input: conversation.ConversationInput,
+    ) -> conversation.ConversationResult:
+        """Process a user input via conversation agent."""
+        return await self._async_handle_message(user_input, self.conversation_chat_log(user_input))
+
 
     async def _async_entry_update_listener(
         self, hass: HomeAssistant, entry: ConfigEntry
