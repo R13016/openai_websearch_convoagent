@@ -118,7 +118,7 @@ class OpenAIConfigFlow(ConfigFlow, domain=DOMAIN):
             errors["base"] = "unknown"
         else:
             return self.async_create_entry(
-                title="ChatGPT",
+                title="ChatGPT+WebSearch",
                 data=user_input,
                 options=RECOMMENDED_OPTIONS,
             )
