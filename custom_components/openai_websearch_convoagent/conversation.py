@@ -30,6 +30,7 @@ from openai.types.responses.response_input_param import FunctionCallOutput
 from openai.types.responses.web_search_tool_param import UserLocation
 from voluptuous_openapi import convert
 
+from homeassistant.components.conversation.chat import ConversationChatLog
 from homeassistant.components import assist_pipeline, conversation
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_LLM_HASS_API, MATCH_ALL
@@ -364,7 +365,9 @@ class OpenAIConversationEntity(
         user_input: conversation.ConversationInput,
     ) -> conversation.ConversationResult:
         """Process a user input via conversation agent."""
-        return await self._async_handle_message(user_input, self.conversation_chat_log(user_input))
+        chat_log = ConversationChatLog(self.hass, self, user_input)
+        return await self._async_handle_message(user_input, chat_log)
+
 
 
     async def _async_entry_update_listener(
