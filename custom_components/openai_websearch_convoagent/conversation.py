@@ -221,7 +221,7 @@ class OpenAIConversationEntity(
             identifiers={(DOMAIN, entry.entry_id)},
             name=entry.title,
             manufacturer="OpenAI",
-            model="ChatGPT",
+            model="ChatGPT+WebSearch",
             entry_type=dr.DeviceEntryType.SERVICE,
         )
         if self.entry.options.get(CONF_LLM_HASS_API):
