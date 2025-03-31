@@ -1,6 +1,7 @@
 {
   "domain": "openai_websearch_convoagent",
   "name": "OpenAI Conversation Agent with Web Search",
+  "version": "1.0.0",
   "after_dependencies": ["assist_pipeline", "intent"],
   "codeowners": ["@R13016"],
   "config_flow": true,
