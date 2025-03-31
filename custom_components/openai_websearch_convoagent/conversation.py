@@ -2,6 +2,7 @@
 
 from collections.abc import AsyncGenerator, Callable
 import json
+import logging
 from typing import Any, Literal
 
 import openai
@@ -65,6 +66,7 @@ from .const import (
 # Max number of back and forth with the LLM to generate a response
 MAX_TOOL_ITERATIONS = 10
 
+_LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -72,8 +74,10 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up conversation entities."""
+    _LOGGER.warning("🚀 [CONVO] async_setup_entry called for conversation agent")
     agent = OpenAIConversationEntity(config_entry)
     async_add_entities([agent])
+
 
 
 def _format_tool(
@@ -237,10 +241,12 @@ class OpenAIConversationEntity(
     async def async_added_to_hass(self) -> None:
         """When entity is added to Home Assistant."""
         await super().async_added_to_hass()
+        _LOGGER.warning("✅ [CONVO] Conversation entity added: %s", self.entity_id)
         assist_pipeline.async_migrate_engine(
             self.hass, "conversation", self.entry.entry_id, self.entity_id
         )
         conversation.async_set_agent(self.hass, self.entry, self)
+        _LOGGER.warning("🧠 [CONVO] Agent registered with Assist")
         self.entry.async_on_unload(
             self.entry.add_update_listener(self._async_entry_update_listener)
         )

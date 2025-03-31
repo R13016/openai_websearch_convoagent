@@ -241,24 +241,27 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 async def async_setup_entry(hass: HomeAssistant, entry: OpenAIConfigEntry) -> bool:
     """Set up OpenAI Conversation from a config entry."""
+    LOGGER.warning("🔁 [INIT] async_setup_entry called for %s", entry.domain)
+
     client = openai.AsyncOpenAI(
         api_key=entry.data[CONF_API_KEY],
         http_client=get_async_client(hass),
     )
 
-    # Cache current platform data which gets added to each request (caching done by library)
     _ = await hass.async_add_executor_job(client.platform_headers)
 
     try:
         await hass.async_add_executor_job(client.with_options(timeout=10.0).models.list)
+        LOGGER.warning("✅ [INIT] OpenAI API key validated")
     except openai.AuthenticationError as err:
-        LOGGER.error("Invalid API key: %s", err)
+        LOGGER.error("❌ [INIT] Invalid API key: %s", err)
         return False
     except openai.OpenAIError as err:
         raise ConfigEntryNotReady(err) from err
 
     entry.runtime_data = client
 
+    LOGGER.warning("🔁 [INIT] Forwarding platform setups: %s", PLATFORMS)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     return True
